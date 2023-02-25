@@ -55,7 +55,7 @@ class Event:
 
     
     def info(self, style, details=False, prefix=""):
-        """ Return a descriptivr string of the event """
+        """ Return a descriptive string of the event """
 
         s = style.none
         if self.start_date < datetime.date.today():
@@ -119,7 +119,7 @@ class Agenda:
         
 
     def is_weekend(self, year, month, day):
-        """ Check if date is Sarturday or Sunday """
+        """ Check if date is Saturday or Sunday """
         
         return datetime.date(year, month, day).weekday() in [5,6]
 
