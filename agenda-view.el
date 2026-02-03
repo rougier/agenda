@@ -151,7 +151,6 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                      (day (if is-month
                               (format "%2d " (nth 1 day-date))
                             "   ")))
-                (message "%s : %s" day-date (length entries))
                 (setq line (concat line
                                    (propertize day
                                                'agenda-entry-marker marker
