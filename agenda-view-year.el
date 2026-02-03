@@ -27,10 +27,6 @@
 (require 'agenda-parse)
 (require 'agenda-faces)
 
-(defvar agenda-view-year--selected-overlay nil
-  "Overlay used for highlighting selected date. This also serves for
-deciding whether to redraw or not.")
-
 (defun agenda-view-year-display (&optional date force)
   "Display a 3x4 grid of months for YEAR.
 Each month is assumed to be exactly 24 columns wide and 10 rows high."
