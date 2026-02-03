@@ -3,8 +3,7 @@
 ;; Copyright (C) 2026 Nicolas P. Rougier
 
 ;; Author: Nicolas P. Rougier <nicolas.rougier@inria.fr>
-;; URL: https://github.com/rougier/agenda.txt
-;; Parent-Package: agenda
+;; URL: https://github.com/rougier/agenda
 
 ;; This file is not part of GNU Emacs.
 

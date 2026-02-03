@@ -5,8 +5,6 @@
 ;; Author: Nicolas P. Rougier <nicolas.rougier@inria.fr>
 ;; URL: https://github.com/rougier/agenda
 
-;; Parent-Package: agenda
-
 ;; This file is not part of GNU Emacs.
 
 ;; This file is free software; you can redistribute it and/or modify
@@ -21,7 +19,6 @@
 
 ;; For a full copy of the GNU General Public License
 ;; see <https://www.gnu.org/licenses/>.
-
 
 ;;; Code:
 (require 'agenda-parse)
