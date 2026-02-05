@@ -308,6 +308,14 @@ When FORCE is t, force update from source."
   (interactive)
   (agenda-view date 'year force))
 
+(defun agenda-view-capture (&optional with-data)
+  "Capture a new entry using date at point (if any)."
+  (interactive "P")
+  (when-let ((date (or (get-text-property (point) 'agenda-date-marker)
+                       (agenda-view-date)
+                       (calendar-current-date))))
+    (agenda-capture date with-data)))
+
 (defun agenda-view (&optional date unit force)
   "Display the agenda for DATE in UNIT mode.
 When FORCE is t, force update from source."
@@ -348,7 +356,7 @@ When FORCE is t, force update from source."
     (define-key map (kbd "RET")       #'agenda-view-goto-entry)
     (define-key map (kbd "TAB")       #'agenda-view-goto-entry)
     (define-key map (kbd "<mouse-1>") #'agenda-view-goto-date-at-point)
-    ;; (define-key map (kbd "c")         #'agenda-view-capture)
+    (define-key map (kbd "c")         #'agenda-view-capture)
     (define-key map (kbd "r")         #'agenda-view-refresh)
     (define-key map (kbd "C-l")       #'agenda-view-refresh)
     (define-key map (kbd "e")         #'agenda-export)
@@ -394,8 +402,7 @@ When FORCE is t, force update from source."
            ((eq (get-text-property (point) prop) val)
             (setq beg (previous-single-property-change
                        (min (1+ (point)) (point-max)) prop nil lbp)
-                end (next-single-property-change (point) prop nil lep)))
-         
+                end (next-single-property-change (point) prop nil lep)))         
            ;; 2. BACKWARD search: Only if NOT at the very start of the line
            ((and (> (point) lbp)
                  (let ((match (text-property-search-backward prop val t)))
