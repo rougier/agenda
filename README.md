@@ -41,7 +41,6 @@ display formatted agenda for the current week.
 <details>
 <summary><b>Show weekly agenda output</b></summary>
 
-
 ```markdown
 # Monday 02 February 2026
 
@@ -73,6 +72,9 @@ display formatted agenda for the current week.
 ```
 
 </details>
+
+It is probably possible to have even fancier renderings using bash but
+I concentrated my efforts on Emacs.
 
 ## Roadmap
 
@@ -201,7 +203,9 @@ day is displayed at the bottom when moving to a new date.
 Capture is very simple since an entry is exactly one line and can be
 directly prompted in the minibuffer. Date and time can be prefilled
 using a provided date or prompted using calendar. When prefixed with
-`C-u`, date can be set for the new entry. The new entry is inserted at
-the nearest date inside the agenda file (starting from end).
+`C-u`, data can be set for the new entry.
+
+The new entry is inserted at the nearest date inside the agenda file
+(starting from end).
 
 
