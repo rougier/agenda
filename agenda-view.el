@@ -234,12 +234,14 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
       (cond ((memq agenda-view-unit '(day year))
              (agenda-view (agenda-date-forward date -1 'day)))
             ((memq agenda-view-unit '(month month-3))
-             (when-let* ((date-prev (agenda-date-forward date -1 'month))
-                         (prop (save-excursion
-                                 (goto-char (point-min))
-                                 (text-property-search-forward 'agenda-date-marker
-                                                               date-prev t))))
-               (goto-char (prop-match-beginning prop)))))
+             (if-let* ((date-prev (agenda-date-forward date -1 'month))
+                       (prop (save-excursion
+                               (goto-char (point-min))
+                               (text-property-search-forward 'agenda-date-marker
+                                                             date-prev t))))
+                 (goto-char (prop-match-beginning prop))
+               (call-interactively #'left-char)))
+            (t   (call-interactively #'left-char)))
     (call-interactively #'left-char)))
 
 (defun agenda-view-goto-right ()
@@ -248,12 +250,14 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
       (cond ((memq agenda-view-unit '(day year))
              (agenda-view (agenda-date-forward date +1 'day)))
             ((memq agenda-view-unit '(month month-3))
-             (when-let* ((date-prev (agenda-date-forward date +1 'month))
+             (if-let* ((date-prev (agenda-date-forward date +1 'month))
                          (prop (save-excursion
                                  (goto-char (point-min))
                                  (text-property-search-forward 'agenda-date-marker
                                                                date-prev t))))
-               (goto-char (prop-match-beginning prop)))))
+                 (goto-char (prop-match-beginning prop))
+               (call-interactively #'right-char)))
+            (t (call-interactively #'right-char)))
     (call-interactively #'right-char)))
 
 (defun agenda-view-goto-shift-left ()
