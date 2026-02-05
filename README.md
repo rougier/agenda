@@ -83,10 +83,10 @@ progress**. Syntax should not changed much but may be nonetheless
 modified if bugs or incompatibilities are found. There a few missing
 things that are planned:
 
-- [ ] Documentation
+- [x] Documentation
 - [ ] Reorganize faces
 - [ ] Handle multiple agenda files
-- [ ] Export (org and ical formats)
+- [x] Export (ical format)
 - [ ] Automated git support
 - [ ] Better handling of TODO/DONE
 - [ ] A set of bash view commands
