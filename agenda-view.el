@@ -211,7 +211,12 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                                  (goto-char (point-min))
                                  (text-property-search-forward 'agenda-date-marker
                                                                date-prev t))))
-               (goto-char (prop-match-beginning prop)))))
+               (goto-char (prop-match-beginning prop))))
+            ((memq agenda-view-unit '(week))
+             (when-let* ((prop (save-excursion
+                                 (text-property-search-backward 'agenda-date-marker))))
+               (goto-char (prop-match-beginning prop))))             
+            (t (call-interactively #'previous-line)))
     (call-interactively #'previous-line)))
 
 (defun agenda-view-goto-down ()
@@ -225,7 +230,12 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                                  (goto-char (point-min))
                                  (text-property-search-forward 'agenda-date-marker
                                                                date-prev t))))
-               (goto-char (prop-match-beginning prop)))))
+               (goto-char (prop-match-beginning prop))))
+            ((memq agenda-view-unit '(week))
+             (when-let* ((prop (save-excursion
+                                 (text-property-search-forward 'agenda-date-marker nil nil t))))
+               (goto-char (prop-match-beginning prop))))
+            (t (call-interactively #'next-line)))
     (call-interactively #'next-line)))
 
 (defun agenda-view-goto-left ()

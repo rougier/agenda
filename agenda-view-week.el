@@ -143,7 +143,6 @@ When FORCE is t, force update"
                      (lambda (entry week year)
                        (and (not (agenda-entry-cancel-p entry))
                             (not (agenda-entry-done-p entry))
-                            ;; (agenda-entry-after-p entry)
                             (agenda-entry-deadline-p entry)))
                      week year))
          (entries (sort (append entries birthdays) #'agenda-entry-less-p)))
@@ -179,7 +178,8 @@ When FORCE is t, force update"
                                      'agenda-hl-range t
                                      'face face)))
           (when (<= days 30)
-                (insert (agenda-view-week--display-entry entry time-str))))))
+            (insert (propertize (agenda-view-week--display-entry entry time-str)
+                                'agenda-date-marker date))))))
     (goto-char (or point-date point-first (point-min)))))
 
 (provide 'agenda-view-week)
