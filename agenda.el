@@ -60,10 +60,21 @@
 (require 'agenda-utils)
 (require 'agenda-view)
 (require 'agenda-edit)
+(require 'agenda-export)
 (require 'agenda-capture)
 
 (defcustom agenda-file (expand-file-name "agenda.txt" user-emacs-directory)
   "Agenda file"
+  :group 'agenda
+  :type 'file)
+
+(defcustom agenda-file-ical-public "~/.calendars/Public.ics"
+  "Agenda export filename for public agenda (personal information stripped)."
+  :group 'agenda
+  :type 'file)
+
+(defcustom agenda-file-ical-private "~/.calendars/Private.ics"
+  "Agenda export filename for public agenda (personal information visible)."
   :group 'agenda
   :type 'file)
 

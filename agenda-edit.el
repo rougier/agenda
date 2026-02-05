@@ -686,6 +686,7 @@ With a prefix argument (C-u), skip the '# Holidays' header."
     (define-key map (kbd "S-<left>")  #'agenda-shift-left)
     (define-key map (kbd "S-<down>")  #'agenda-shift-down)
     (define-key map (kbd "S-<up>")    #'agenda-shift-up)
+    (define-key map (kbd "C-c e")     #'agenda-export)
     (define-key map (kbd "C-c g")     #'agenda-goto-date)
     (define-key map (kbd "C-c i")     #'agenda-insert-entry)
     (define-key map (kbd "C-c r")     #'agenda-repeat-entry)

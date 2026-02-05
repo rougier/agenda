@@ -351,6 +351,7 @@ When FORCE is t, force update from source."
     ;; (define-key map (kbd "c")         #'agenda-view-capture)
     (define-key map (kbd "r")         #'agenda-view-refresh)
     (define-key map (kbd "C-l")       #'agenda-view-refresh)
+    (define-key map (kbd "e")         #'agenda-export)
     (define-key map (kbd "d")         #'agenda-view-day)
     (define-key map (kbd "w")         #'agenda-view-week)
     (define-key map (kbd "m")         #'agenda-view-month-1)
