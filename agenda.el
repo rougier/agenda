@@ -40,6 +40,7 @@
 ;;     - agenda-view-week.el    : Week view
 ;;     - agenda-view-month.el   : Single month and 3 months view
 ;;     - agenda-view-year.el    : Year view
+;;   - agenda-export.el         ; Export functions (ical)
 ;;   - agenda-capture.el        : Capture functions
 
 ;; Note on date formats:
