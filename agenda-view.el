@@ -202,30 +202,58 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
 
 (defun agenda-view-goto-up ()
   (interactive)
-  (if-let* ((date (and (memq agenda-view-unit '(day year))
-                       (get-text-property (point) 'agenda-date-marker))))
-      (agenda-view (agenda-date-forward date -7 'day))
+  (if-let* ((date (get-text-property (point) 'agenda-date-marker)))
+      (cond ((memq agenda-view-unit '(day year))
+             (agenda-view (agenda-date-forward date -7 'day)))
+            ((memq agenda-view-unit '(month month-3))
+             (when-let* ((date-prev (agenda-date-forward date -1 'day))
+                         (prop (save-excursion
+                                 (goto-char (point-min))
+                                 (text-property-search-forward 'agenda-date-marker
+                                                               date-prev t))))
+               (goto-char (prop-match-beginning prop)))))
     (call-interactively #'previous-line)))
 
 (defun agenda-view-goto-down ()
   (interactive)
-  (if-let* ((date (and (memq agenda-view-unit '(day year))
-                       (get-text-property (point) 'agenda-date-marker))))
-      (agenda-view (agenda-date-forward date +7 'day))
+  (if-let* ((date (get-text-property (point) 'agenda-date-marker)))
+      (cond ((memq agenda-view-unit '(day year))
+             (agenda-view (agenda-date-forward date +7 'day)))
+            ((memq agenda-view-unit '(month month-3))
+             (when-let* ((date-prev (agenda-date-forward date +1 'day))
+                         (prop (save-excursion
+                                 (goto-char (point-min))
+                                 (text-property-search-forward 'agenda-date-marker
+                                                               date-prev t))))
+               (goto-char (prop-match-beginning prop)))))
     (call-interactively #'next-line)))
 
 (defun agenda-view-goto-left ()
   (interactive)
-  (if-let* ((date (and (memq agenda-view-unit '(day year))
-                       (get-text-property (point) 'agenda-date-marker))))
-      (agenda-view (agenda-date-forward date -1 'day))
+  (if-let* ((date (get-text-property (point) 'agenda-date-marker)))
+      (cond ((memq agenda-view-unit '(day year))
+             (agenda-view (agenda-date-forward date -1 'day)))
+            ((memq agenda-view-unit '(month month-3))
+             (when-let* ((date-prev (agenda-date-forward date -1 'month))
+                         (prop (save-excursion
+                                 (goto-char (point-min))
+                                 (text-property-search-forward 'agenda-date-marker
+                                                               date-prev t))))
+               (goto-char (prop-match-beginning prop)))))
     (call-interactively #'left-char)))
 
 (defun agenda-view-goto-right ()
   (interactive)
-  (if-let* ((date (and (memq agenda-view-unit '(day year))
-                       (get-text-property (point) 'agenda-date-marker))))
-      (agenda-view (agenda-date-forward date +1 'day))
+  (if-let* ((date (get-text-property (point) 'agenda-date-marker)))
+      (cond ((memq agenda-view-unit '(day year))
+             (agenda-view (agenda-date-forward date +1 'day)))
+            ((memq agenda-view-unit '(month month-3))
+             (when-let* ((date-prev (agenda-date-forward date +1 'month))
+                         (prop (save-excursion
+                                 (goto-char (point-min))
+                                 (text-property-search-forward 'agenda-date-marker
+                                                               date-prev t))))
+               (goto-char (prop-match-beginning prop)))))
     (call-interactively #'right-char)))
 
 (defun agenda-view-goto-shift-left ()
