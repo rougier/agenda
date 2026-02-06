@@ -84,9 +84,9 @@ modified if bugs or incompatibilities are found. There a few missing
 things that are planned:
 
 - [x] Documentation
+- [x] Export (ical format)
 - [ ] Reorganize faces
 - [ ] Handle multiple agenda files
-- [x] Export (ical format)
 - [ ] Automated git support
 - [ ] Better handling of TODO/DONE
 - [ ] A set of bash view commands
@@ -197,6 +197,13 @@ day is displayed at the bottom when moving to a new date.
 
 ![View mode (day)](./screenshots/agenda-year-view.png)
 
+
+## Export
+
+It is possible to export the whole agenda to ical format in two files:
+a private file where entries have all the details and a public file
+where title / tags / actions are simply replaced by "(busy)" or
+"(away)" when there is "MAP" data attached. The public file can be used to indicate people when you're available without giving details. Synchronization is made using [vdirsyncer](https://github.com/pimutils/vdirsyncer) that you need to have configured.
 
 ## Capture
 
