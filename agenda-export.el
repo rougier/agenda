@@ -151,9 +151,9 @@ Public UIDs are suffixed with '-PUBLIC', else with '-PRIVATE'."
                        (p-buf (process-buffer p)))
                   (cond 
                    ((string-match-p "finished" event)
-                    (message "Vdirsyncer: Sync complete (%.2fs)." elapsed))
+                    (message "vdirsyncer: sync complete (%.2fs)." elapsed))
                    ((string-match-p "exited abnormally" event)
-                    (message "Vdirsyncer: FAILED (%.2fs)." elapsed)
+                    (message "vdirsyncer: sync failed (%.2fs)." elapsed)
                     (pop-to-buffer p-buf)))))))))))
 
 (defun agenda-export (&optional no-sync)
