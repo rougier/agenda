@@ -132,6 +132,10 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                      (is-weekend (memq (calendar-day-of-week day-date) '(0 6)))
                      (slots (agenda-collect-slots day-date))
                      (entries (seq-find #'identity slots))
+                     (has-deadline (seq-some
+                                    (lambda (entry)
+                                      (member "DEADLINE" (cdr (assoc 'tags entry))))
+                                    entries))
                      ;; FIXME: Does that work a slot has several entries?
                      (first-entry (car entries))
                      (marker (cdr (assoc 'marker first-entry)))
@@ -141,12 +145,16 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                      (total (min total (length palette)))
                      (face (cond
                             ((and is-month (> total 0))
-                             `( :foreground ,(car (nth total palette))
-                                :background ,(cdr (nth total palette))))
+                             `( :inherit ,(if has-deadline 'bold 'default)
+                                :foreground ,(car (nth total palette))
+                                :background ,(cdr (nth total palette))
+                                ))
                             ((and is-month is-weekend)
                              'shadow)))
                      (day (if is-month
-                              (format "%2d " (nth 1 day-date))
+                              (if has-deadline
+                                  (format "%2d%s" (nth 1 day-date) (agenda-mark 'deadline))
+                                (format "%2d " (nth 1 day-date)))                            
                             "   ")))
                 (setq line (concat line
                                    (propertize day
