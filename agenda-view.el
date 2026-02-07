@@ -308,17 +308,21 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
 
 (defun agenda-view-goto-entry ()
   "Jump to the source line of the entry at point or to the closest date if
-no entry at point."
+no entry at point. When in year mode, switch to week mode instead."
   (interactive)  
   (let* ((marker (get-text-property (point) 'agenda-entry-marker))
          (date (get-text-property (point) 'agenda-date-marker)))
-    (cond (marker
+    (cond ((eq agenda-view-unit 'year)
+           (agenda-view-week))
+
+          (marker
            (pop-to-buffer (marker-buffer marker))
            (agenda-filter "")
            (goto-char (marker-position marker))
            (agenda-highlight (line-beginning-position)
                              (line-end-position))
            (recenter))
+          
           (date
            (pop-to-buffer (agenda-source-buffer))
            (agenda-filter "")
