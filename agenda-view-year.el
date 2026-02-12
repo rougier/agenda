@@ -25,37 +25,51 @@
 (require 'agenda-parse)
 (require 'agenda-faces)
 
-(defun agenda-view-year-display (&optional date force)
-  "Display a 3x4 grid of months for YEAR.
-Each month is assumed to be exactly 24 columns wide and 10 rows high."
+(defvar agenda-view-year--layout '(3 . 4)
+  "Year view calendar layout as (ROWS . COLS).")
+
+(defun agenda-view-year-display (&optional date force layout)
+  "Display a grid of months for YEAR based on LAYOUT (rows . cols).
+Default LAYOUT is (3 . 4). Each month is 24 columns wide and 10 rows high."
   (let* ((date (or date agenda-view-date))
          (year (nth 2 date))
          (month (nth 0 date))
-         (day  (nth 1 date)))
-    (dotimes (row 3)
-      (let* ((m (+ 1 (* row 4)))
-             (m1 (+ m 0))
-             (c1 (split-string
-                  (agenda-view-calendar (list m1 day year) (eq m1 month) force) "\n" t))
-             (m2 (+ m 1))
-             (c2 (split-string
-                  (agenda-view-calendar (list m2 day year) (eq m2 month) force) "\n" t))
-             (m3 (+ m 2)) 
-             (c3 (split-string
-                  (agenda-view-calendar (list m3 day year) (eq m3 month) force) "\n" t))
-             (m4 (+ m 3))
-             (c4 (split-string
-                  (agenda-view-calendar (list m4 day year) (eq m4 month) force) "\n" t)))
-          (dotimes (line 10)
-            (insert (nth line c1) " " 
-                    (nth line c2) " " 
-                    (nth line c3) " "
-                    (nth line c4) "\n"))
-          (insert "")))
-
+         (day  (nth 1 date))
+         (layout (or layout '(3 . 4)))
+         (rows (car layout))
+         (cols (cdr layout)))
+    (setq agenda-view-year--layout layout)
+    (dotimes (row rows)
+      (let ((months nil))
+        (dotimes (col cols)
+          (let* ((month-index  (+ 1 (* row cols) col))
+                 (month-string (agenda-view-calendar (list month-index day year) 
+                                                    (eq month-index month) 
+                                                    force)))
+            (push (split-string month-string "\n" t) months)))
+        (setq months (nreverse months))
+        (dotimes (line 10)
+          (dolist (month-lines months)
+            (insert (nth line month-lines) " "))
+          (insert "\n"))))
     (goto-char (point-min))
     (when-let ((prop (text-property-search-forward 'agenda-date-marker date #'equal)))
       (goto-char (prop-match-beginning prop)))))
+
+(defun agenda-view-year-display-auto (&optional date force)
+  "Calculate the best (rows . cols) layout based on window width."
+  (let* ((width (window-width))
+         ;; Each month is 24 chars + 1 char space = 25
+         (max-cols (max 1 (/ width 25)))
+         (cols (cond ((>= max-cols 12) 12)
+                     ((>= max-cols 6)  6)
+                     ((>= max-cols 4)  4)
+                     ((>= max-cols 3)  3)
+                     ((>= max-cols 2)  2)
+                     (t 1)))
+         (rows (/ 12 cols))
+         (layout (cons rows cols)))
+    (agenda-view-year-display date force layout)))
 
 (provide 'agenda-view-year)
 ;;; agenda-view-year.el ends here

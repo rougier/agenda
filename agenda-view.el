@@ -151,7 +151,7 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                                 :foreground ,(car (nth total palette))
                                 :background ,(cdr (nth total palette))))
                             ((and is-month is-weekend)
-                             'shadow)))
+                             '(:inherit shadow))))
                      (day (if is-month
                               (if has-deadline
                                   (format "%2d%s" (nth 1 day-date) (agenda-mark 'deadline))
@@ -297,14 +297,14 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
   (interactive)
   (if-let* ((date (and (memq agenda-view-unit '(year))
                        agenda-view-date)))
-      (agenda-view (agenda-date-forward date -4 'month))
+      (agenda-view (agenda-date-forward date (- (car agenda-view-year--layout)) 'month))
     (call-interactively #'previous-line)))
 
 (defun agenda-view-goto-shift-down ()
   (interactive)
   (if-let* ((date (and (memq agenda-view-unit '(year))
                        agenda-view-date)))
-      (agenda-view (agenda-date-forward date +4 'month))
+      (agenda-view (agenda-date-forward date (car agenda-view-year--layout) 'month))
     (call-interactively #'next-line)))
 
 (defun agenda-view-goto-entry ()
@@ -393,7 +393,7 @@ When FORCE is t, force update from source."
               ((eq unit 'week)    (agenda-view-week-display nil force))
               ((eq unit 'month)   (agenda-view-month-1-display nil force))
               ((eq unit 'month-3) (agenda-view-month-3-display nil force))
-              ((eq unit 'year)    (agenda-view-year-display nil force))
+              ((eq unit 'year)    (agenda-view-year-display-auto nil force))
               (t (error (format "Unknown view mode (%s)" unit))))
         (set-buffer-modified-p nil)
         (unless (derived-mode-p 'agenda-view-mode)
