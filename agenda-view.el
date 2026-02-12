@@ -144,11 +144,12 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
                      (palette agenda-calendar-palette)
                      (total (min total (length palette)))
                      (face (cond
+;;                            ((and is-month has-deadline)
+  ;;                           '(:background "#FFFF00" :foreground "#000000"))
                             ((and is-month (> total 0))
                              `( :inherit ,(if has-deadline 'bold 'default)
                                 :foreground ,(car (nth total palette))
-                                :background ,(cdr (nth total palette))
-                                ))
+                                :background ,(cdr (nth total palette))))
                             ((and is-month is-weekend)
                              'shadow)))
                      (day (if is-month

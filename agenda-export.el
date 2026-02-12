@@ -138,12 +138,12 @@ Public UIDs are suffixed with '-PUBLIC', else with '-PRIVATE'."
          (proc (get-buffer-process buf))
          (start-time (float-time (current-time))))    
     (if (process-live-p proc)
-        (message "Vdirsyncer is already running.")      
+        (message "vdirsyncer is already running.")      
       (progn
         (with-current-buffer buf
           (let ((inhibit-read-only t))
             (erase-buffer)))        
-        (message "Vdirsyncer: Sync started...")        
+        (message "vdirsyncer: sync started...")        
         (let ((new-proc (start-process-shell-command "vdir-sync" buf "vdirsyncer sync")))
           (set-process-sentinel new-proc
               (lambda (p event)
