@@ -297,14 +297,14 @@ Uses a cache based on month, year, and ACTIVE status unless FORCE is non-nil."
   (interactive)
   (if-let* ((date (and (memq agenda-view-unit '(year))
                        agenda-view-date)))
-      (agenda-view (agenda-date-forward date (- (car agenda-view-year--layout)) 'month))
+      (agenda-view (agenda-date-forward date (- (cdr agenda-view-year--layout)) 'month))
     (call-interactively #'previous-line)))
 
 (defun agenda-view-goto-shift-down ()
   (interactive)
   (if-let* ((date (and (memq agenda-view-unit '(year))
                        agenda-view-date)))
-      (agenda-view (agenda-date-forward date (car agenda-view-year--layout) 'month))
+      (agenda-view (agenda-date-forward date (cdr agenda-view-year--layout) 'month))
     (call-interactively #'next-line)))
 
 (defun agenda-view-goto-entry ()
